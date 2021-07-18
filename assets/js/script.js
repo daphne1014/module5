@@ -12,6 +12,13 @@ for (i = 0; i < workingHours.length; i++) {
     //create container for each hour as a bootstrap row
     let hourContainer = $('<div>')
         .addClass('row');
+        if ((i + startTime) < currentHour) {
+            hourContainer.addClass('past')
+        } else if ((i + startTime) === currentHour) {
+            hourContainer.addClass('present')
+        } else { (i + startTime) > currentHour } {
+            hourContainer.addClass('future')
+        }
 
     //display time as a partial colum with width of 1
     let time = $('<div>')
@@ -19,8 +26,26 @@ for (i = 0; i < workingHours.length; i++) {
         .append(moment(i + startTime).format('h')); //need to check once more
     hourContainer.append(time);
 
-    //create container to put schedule
+    //create schedule info inside the container
+    let scheduleP = $('<p>')
+        .addClass('col-10')
+        .text(scheduleText);
+  
+    hourContainer.append(scheduleP);
 
+    //create save button inside the container
 
+    let saveBtn = $('<button>')
+        .addClass('col-1 saveBtn');
+    let saveIcon = $('<span>')
+        .addClass("bi bi-save");
+    saveBtn.append(saveIcon);
+
+    hourContainer.append(saveBtn);
+
+    //append the rows
+    $('#container').append(hourContainer);
 
 }
+
+//ScheduleText
