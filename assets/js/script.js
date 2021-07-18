@@ -9,9 +9,11 @@ let startTime = 9;
 let workingHours = 8;
 
 //create list
-let day = localStorage.getItem('date') || "";
+let loadData = localStorage.getItem('date') || "";
 
-if (day === currentDay) {
+
+
+if (loadData === currentDay) {
     list = JSON.parse(localStorage.getItem('hourSchedule'));
 } else {
     list = [];
@@ -34,14 +36,13 @@ for (i = 0; i < workingHours; i++) {
 
     //create schedule info inside the container
     let scheduleP = $('<textarea>')
-        .addClass('col-10')
         .attr('id', 'text' + i)
     if ((i + startTime) < currentHour) {
-        scheduleP.addClass('past')
+        scheduleP.addClass('col-10 past')
     } else if ((i + startTime) === currentHour) {
-        scheduleP.addClass('present')
+        scheduleP.addClass('col-10 present')
     } else {
-        scheduleP.addClass('future')
+        scheduleP.addClass('col-10 future')
     }
 
     scheduleP.text(list[i]);
@@ -57,15 +58,17 @@ for (i = 0; i < workingHours; i++) {
         .addClass("far fa-save");
     saveBtn.append(saveIcon);
 
-
+    let saveData = function(){
+        localStorage.setItem('hourSchedule', JSON.stringify(list));
+        localStorage.setItem('date', currentDay)
+    }
     //save to local storage
     saveBtn.on('click', function (event) {
         event.preventDefault();
         let now = $(this).attr('schedule-data');
         list[now] = $('#text' + now).val();
 
-        localStorage.setItem('hourSchedule', JSON.stringify(list));
-        localStorage.setItem('date', currentDay)
+        saveData;
     })
 
     hourContainer.append(saveBtn);
